@@ -1,4 +1,12 @@
-<div>
-  {% block student %}{% endblock %}
-  {% block teacher %}{% endblock %}
-</div>
+{% extends "base.html" %}
+{% block content %}
+  {% if user.profile.is_student %}
+    {% block student %}
+      student
+    {% endblock %}
+  {% else %}
+    {% block teacher %}
+      teacher
+    {% endblock %}
+  {% endif %}
+{% endblock %}

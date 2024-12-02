@@ -31,7 +31,7 @@ def subject_detail(request, code):
 
 
 @login_required
-def subject_lessons(request):
+def subject_lessons(request, subject):
     pass
 
 
@@ -56,7 +56,7 @@ def delete_lesson(request):
 
 
 @login_required
-def mark_list(request):
+def mark_list(request, subject):
     pass
 
 

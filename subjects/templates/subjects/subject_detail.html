@@ -14,15 +14,13 @@
         </p>
         <div>
           {% include "dashboard.html" %}
-          {% if user.profile.is_student %}
-            {% block student %}{% endblock %}
-          {% else %}
-            {% block teacher %}{% endblock %}
-          {% endif %}
+          <div class="d-flex flex-column align-items-center">
+            <a href="{% url "subjects:subject-lessons" subject %}" class="btn btn-primary">Go to lessons</a>
+            <a href="{% url "subjects:mark-list" subject %}" class="btn btn-primary mt-1">See the subject's marks</a>
+          </div>
         </div>
       </div>
     </div>
     <a href="{% url 'subjects:subject-list' %}">Go to the Subject List</a>
   </div>
 {% endblock %}
-
