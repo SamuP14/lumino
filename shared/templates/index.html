@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} | Homepage{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'shared/styles.css' %}">
+{% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<div class="d-flex justify-content-center" style="margin-top: 300px;">
+  <h1 class="text-white">Wellcome to Lumino</h1>
+</div>
+{% endblock %}

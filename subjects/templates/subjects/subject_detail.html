@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %} | {{ subject.code }}{% endblock %}
+
+{% block content %}
+  {% include "navbar.html" %}
+  <div class="container" style="margin-top: 70px;">
+
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5 class="mb-1">{{ subject.code }} // {{ subject.name }}</h5>
+        <p class="mt-3">
+          Teacher: {{ subject.teacher.get_full_name }}
+        </p>
+        <div>
+          {% include "dashboard.html" %}
+          {% if user.profile.is_student %}
+            {% block student %}{% endblock %}
+          {% else %}
+            {% block teacher %}{% endblock %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'subjects:subject-list' %}">Go to the Subject List</a>
+  </div>
+{% endblock %}
+

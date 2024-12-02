@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} | Subjects{% endblock %}
+{% block content %}
+  {% include "navbar.html" %}
+  <div class="container" style="margin-top: 70px;">
+    <div class="d-flex flex-start mb-3">
+      <h4>Welcome, {{ user.username }} 👋</h4>
+    </div>
+    <div class="list-group">
+      {% for subject in subjects %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="mb-1">Code: {{ subject.code }}</h5>
+            <p class="mb-1">Name: {{ subject.name }}</p>
+          </div>
+          <a href="{{ subject.get_absolute_url }}" class="ms-3">
+            <i class="bi bi-eye"></i> Go to the Subject
+          </a>
+        </div>      
+      {% empty %}
+        {% if user.profile.is_student %}
+          <div class="alert alert-warning" role="alert">
+            You don't have any subjects yet. 
+            <a href="{% url "users:enroll-subjects" %}" class="alert-link">Enroll in one or more of our subjects here!</a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
