@@ -6,12 +6,12 @@ app_name = 'subjects'
 
 urlpatterns = [
     path('', views.subject_list, name='subject-list'),
-    path('<str:code>/', views.subject_detail, name='subject-detail'),
-    path('<str:code>/lessons/', views.subject_lessons, name='subject-lessons'),
-    path('<str:code>/lessons/add/', views.add_lesson, name='add-lesson'),
-    path('<str:code>/lessons/<int:pk>/', views.lesson_detail, name='lesson-detail'),
-    path('<str:code>/lessons/<int:pk>/edit/', views.edit_lesson, name='edit-lesson'),
-    path('<str:code>/lessons/<int:pk>/delete/', views.delete_lesson, name='delete-lesson'),
-    path('<str:code>/lessons/marks/', views.mark_list, name='mark-list'),
-    path('<str:code>/lessons/marks/edit/', views.edit_marks, name='edit_marks'),
+    path('<str:subject_code>/', views.subject_detail, name='subject-detail'),
+    path('<str:subject_code>/lessons/', views.subject_lessons, name='subject-lessons'),
+    path('<str:subject_code>/lessons/add/', views.add_lesson, name='add-lesson'),
+    path('<str:subject_code>/lessons/<int:pk>/', views.lesson_detail, name='lesson-detail'),
+    path('<str:subject_code>/lessons/<int:pk>/edit/', views.edit_lesson, name='edit-lesson'),
+    path('<str:subject_code>/lessons/<int:pk>/delete/', views.delete_lesson, name='delete-lesson'),
+    path('<str:subject_code>/lessons/marks/', views.mark_list, name='mark-list'),
+    path('<str:subject_code>/lessons/marks/edit/', views.edit_marks, name='edit_marks'),
 ]

@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from .models import Subject
+
 
 @login_required
 def subject_list(request):
@@ -17,11 +19,11 @@ def subject_list(request):
 
 
 @login_required
-def subject_detail(request, code):
+def subject_detail(request, subject_code):
     if request.user.profile.is_student():
-        subject = request.user.students_subjects.get(code=code)
+        subject = request.user.students_subjects.get(code=subject_code)
     else:
-        subject = request.user.teacher_subjects.get(code=code)
+        subject = request.user.teacher_subjects.get(code=subject_code)
 
     return render(
         request,
@@ -31,8 +33,21 @@ def subject_detail(request, code):
 
 
 @login_required
-def subject_lessons(request, subject):
-    pass
+def subject_lessons(request, subject_code):
+    # if request.user.profile.is_student():
+    #     subjects = request.user.students_subjects.all()
+    # else:
+    #     subjects = request.user.teacher_subjects.all()
+    subject = Subject.objects.get(code=subject_code)
+    lessons = subject.lessons.all()
+    return render(
+        request,
+        'lessons/lesson_list.html',
+        {
+            'subject': subject,
+            'lessons': lessons,
+        },
+    )
 
 
 @login_required

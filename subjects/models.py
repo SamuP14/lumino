@@ -23,7 +23,7 @@ class Subject(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse('subjects:subject-detail', kwargs={'code': self.code})
+        return reverse('subjects:subject-detail', kwargs={'subject_code': self.code})
 
     def __str__(self):
         return self.code
