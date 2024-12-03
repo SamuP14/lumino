@@ -41,7 +41,7 @@ def lesson_detail(request):
 
 
 @login_required
-def add_lesson(request):
+def add_lesson(request, subject):
     pass
 
 
