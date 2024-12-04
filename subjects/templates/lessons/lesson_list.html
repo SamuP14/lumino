@@ -1,23 +1,18 @@
-{% extends "base.html" %}
-{% block title %} | {{ subject.code }} | Lessons {% endblock %}
-{% block content %}
-{% include "navbar.html" %}
-  <div class="container" style="margin-top: 70px;">
-    <div class="d-flex flex-start mb-3">
-      <h4>Welcome, {{ user.username }} 👋</h4>
-    </div>
-    <div class="list-group">
-      {% for lesson in lessons %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          {{ lesson.title }}
-        </div>      
-      {% empty %}
-        {% if user.profile.is_student %}
-          <div class="alert alert-warning" role="alert">
-            This subject doesn't have any lessons yet.
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+<div class="container" style="margin-top: 70px;">
+  <div class="d-flex flex-start mb-3">
+    <h4>Welcome, {{ user.username }} 👋</h4>
   </div>
-{% endblock %}
+  <div class="list-group">
+    {% for lesson in lessons %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        {{ lesson.title }}
+      </div>      
+    {% empty %}
+      {% if user.profile.is_student %}
+        <div class="alert alert-warning" role="alert">
+          This subject doesn't have any lessons yet.
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

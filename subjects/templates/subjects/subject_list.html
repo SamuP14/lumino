@@ -21,7 +21,7 @@
         {% if user.profile.is_student %}
           <div class="alert alert-warning" role="alert">
             You don't have any subjects yet. 
-            <a href="{% url "users:enroll-subjects" %}" class="alert-link">Enroll in one or more of our subjects here!</a>
+            <a href="{% url "subjects:enroll-subjects" %}" class="alert-link">Enroll in one or more of our subjects here!</a>
           </div>
         {% endif %}
       {% endfor %}

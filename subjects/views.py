@@ -25,10 +25,15 @@ def subject_detail(request, subject_code):
     else:
         subject = request.user.teacher_subjects.get(code=subject_code)
 
+    lessons = subject.lessons.all()
+
     return render(
         request,
         'subjects/subject_detail.html',
-        dict(subject=subject),
+        dict(
+            subject=subject,
+            lessons=lessons,
+        ),
     )
 
 
