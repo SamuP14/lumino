@@ -78,3 +78,13 @@ def mark_list(request, subject):
 @login_required
 def edit_marks(request):
     pass
+
+
+@login_required
+def enroll_subjects(request):
+    pass
+
+
+@login_required
+def unenroll_subjects(request):
+    pass
