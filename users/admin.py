@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Enrollment, Profile
+from subjects.models import Enrollment
+
+from .models import Profile
 
 
 @admin.register(Profile)

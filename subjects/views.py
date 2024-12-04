@@ -38,26 +38,18 @@ def subject_detail(request, subject_code):
 
 
 @login_required
-def subject_lessons(request, subject_code):
-    # if request.user.profile.is_student():
-    #     subjects = request.user.students_subjects.all()
-    # else:
-    #     subjects = request.user.teacher_subjects.all()
+def lesson_detail(request, subject_code, lesson_pk):
     subject = Subject.objects.get(code=subject_code)
-    lessons = subject.lessons.all()
+    lesson = subject.lessons.get(pk=lesson_pk)
+
     return render(
         request,
-        'lessons/lesson_list.html',
-        {
-            'subject': subject,
-            'lessons': lessons,
-        },
+        'lessons/lesson_detail.html',
+        dict(
+            subject=subject,
+            lesson=lesson,
+        ),
     )
-
-
-@login_required
-def lesson_detail(request):
-    pass
 
 
 @login_required
