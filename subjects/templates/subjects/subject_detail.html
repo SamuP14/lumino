@@ -27,7 +27,7 @@
         <div class="alert alert-warning" role="alert">
           This subject doesn't have any lessons yet.
           {% if not user.profile.is_student %}
-            Add a new lesson
+            <a href="{% url "subjects:add-lesson" subject.code %}">Add a new lesson</a>
           {% endif %}
         </div>
       {% endfor %}
