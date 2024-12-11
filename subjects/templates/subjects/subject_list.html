@@ -17,8 +17,8 @@
             <h5 class="mb-1">Code: {{ subject.code }}</h5>
             <p class="mb-1">Name: {{ subject.name }}</p>
           </div>
-          <a href="{{ subject.get_absolute_url }}" class="ms-3">
-            <i class="bi bi-eye"></i> Go to the Subject
+          <a href="{{ subject.get_absolute_url }}" class="ms-3 btn btn-primary">
+            <i class="bi bi-box-arrow-up-right"></i> View
           </a>
         </div>      
       {% empty %}
