@@ -4,14 +4,25 @@
 
 {% block content %}
   {% include "navbar.html" %}
-  <div class="container" style="margin-top: 70px;">
-    <div style="width: 100px; height: 100px; border-radius: 50%; background-image: url('{{ user.profile.avatar.url }}'); background-size: cover; background-position: center;">
+    
+  <div class="card" style="margin-top: 70px;">
+    <div class="card-body">
+      <div style="width: 100px; height: 100px; border-radius: 50%; background-image: url('{{ user.profile.avatar.url }}'); background-size: cover; background-position: center;">
+    
+      </div>
+      <p class="card-title">
+        <h5>
+          Username: {{ user.username }}
+        </h5>
+        <h6>Full name: {{ user.first_name }} {{ user.last_name }}</h6>
+      </p>
+      <p class="card-text">
+        Bio:
+        <p style="text-align: justify;">
+          {{ user.profile.bio }}
+        </p>
+      </p>
+      <a href="{% url "subjects:subject-list" %}" class="btn btn-primary">Back to subjects</a>
     </div>
-    <p>Username: {{ user.username }}</p>
-    <p>Full name: {{ user.first_name }} {{ user.last_name }}</p>
-    <p>Bio: </p>
-    <p>
-      {{ user.profile.bio }}
-    </p>
   </div>
 {% endblock %}
