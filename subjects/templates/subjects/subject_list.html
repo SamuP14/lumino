@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
   {% include "navbar.html" %}
-  <nav aria-label="breadcrumb" style="margin-top: 70px;">
+  <div class="d-flex flex-start mb-3" style="margin-top: 70px;">
+    <h4>Welcome, {{ user.username }} 👋</h4>
+  </div>
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active ms-2" aria-current="page">Subjects</li>
     </ol>
   </nav>  
   <div class="container">
-    <div class="d-flex flex-start mb-3">
-      <h4>Welcome, {{ user.username }} 👋</h4>
-    </div>
     <div class="list-group">
       {% for subject in subjects %}
         <div class="list-group-item d-flex justify-content-between align-items-center">

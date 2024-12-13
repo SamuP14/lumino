@@ -6,7 +6,12 @@
 {% endblock %}
 {% block content %}
 {% include "navbar.html" %}
-<div class="d-flex justify-content-center" style="margin-top: 300px;">
-  <h1 class="text-white">Wellcome to Lumino</h1>
+<div class="d-flex align-items-center flex-column" style="margin-top: 200px;">
+  <h1>Welcome to Lumino</h1>
+  <div class="mt-4">
+    <a class="btn btn-primary" href="{% url "login" %}">Login</a>
+    - or -
+    <a class="btn btn-primary" href="{% url "signup" %}">Signup</a>
+  </div>
 </div>
 {% endblock %}

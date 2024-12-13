@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from users.admin import EnrollmentinLine
 
-from .models import Lesson, Subject
+from .models import Enrollment, Lesson, Subject
 
 
 @admin.register(Subject)
@@ -24,4 +24,14 @@ class LessonAdmin(admin.ModelAdmin):
         'title',
         'content',
         'subject',
+    )
+
+
+@admin.register(Enrollment)
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = (
+        'student',
+        'subject',
+        'mark',
+        'enrolled_at',
     )
