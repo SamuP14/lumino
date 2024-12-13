@@ -28,12 +28,14 @@
             <a href="{% url 'subjects:lesson-detail' subject.code lesson.pk %}" class="ms-3 btn btn-info">
               <i class="bi bi-box-arrow-up-right"></i> View
             </a>
-            <a href="{% url 'subjects:edit-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-warning">
-              <i class="bi bi-box-arrow-up-right"></i> Edit
-            </a>
-            <a href="{% url 'subjects:delete-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-danger">
-              <i class="bi bi-box-arrow-up-right"></i> Delete
-            </a>
+            {% if not user.profile.is_student %}
+              <a href="{% url 'subjects:edit-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-warning">
+                <i class="bi bi-box-arrow-up-right"></i> Edit
+              </a>
+              <a href="{% url 'subjects:delete-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-danger">
+                <i class="bi bi-box-arrow-up-right"></i> Delete
+              </a>
+            {% endif %}
           </div>
         </div>      
       {% empty %}
