@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from .forms import AddLessonForm
+from .forms import AddLessonForm, EditLessonForm
 from .models import Subject
 
 
@@ -66,13 +66,26 @@ def add_lesson(request, subject_code):
 
 
 @login_required
-def edit_lesson(request):
-    pass
+def edit_lesson(request, subject_code, lesson_pk):
+    subject = Subject.objects.get(code=subject_code)
+    lesson = subject.lessons.get(pk=lesson_pk)
+
+    if request.method == 'GET':
+        form = EditLessonForm(subject, instance=lesson)
+    else:
+        if (form := EditLessonForm(subject, data=request.POST, instance=lesson)).is_valid():
+            form.save()
+            return redirect(subject)
+    return render(request, 'lessons/edit_lesson.html', dict(form=form))
 
 
 @login_required
-def delete_lesson(request):
-    pass
+def delete_lesson(request, subject_code, lesson_pk):
+    subject = Subject.objects.get(code=subject_code)
+    lesson = subject.lessons.get(pk=lesson_pk)
+
+    lesson.delete()
+    return redirect(subject)
 
 
 @login_required
