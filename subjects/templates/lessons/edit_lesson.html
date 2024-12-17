@@ -1,17 +1,26 @@
 {% extends "base.html" %}
 {% block title %} | Edit Lesson{% endblock %}
 {% block content %}
-{% load crispy_forms_tags %}
-<div class="row justify-content-center mt-5">
-  <div class="col-md-4">
-    <div class="card border-dark">
-      <h4 class="card-header">
-        Edit lesson
-      </h4>
-      <div class="card-body">
-        {% crispy form %}
+  {% include "navbar.html" %}
+    <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>';">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ms-2"><a href="{% url "subjects:subject-list" %}">Subjects</a></li>
+        <li class="breadcrumb-item"><a href="{% url "subjects:subject-detail" subject.code %}">{{ subject.code }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'subjects:lesson-detail' subject.code lesson.pk %}">{{ lesson.title }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Lesson {{ lesson.title }}</a></li>
+      </ol>
+    </nav>
+  {% load crispy_forms_tags %}
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+      <div class="card border-dark">
+        <h4 class="card-header">
+          Edit lesson
+        </h4>
+        <div class="card-body">
+          {% crispy form %}
+        </div>
       </div>
     </div>
   </div>
-</div>
 {% endblock %}

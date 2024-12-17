@@ -76,7 +76,9 @@ def edit_lesson(request, subject_code, lesson_pk):
         if (form := EditLessonForm(subject, data=request.POST, instance=lesson)).is_valid():
             form.save()
             return redirect(subject)
-    return render(request, 'lessons/edit_lesson.html', dict(form=form))
+    return render(
+        request, 'lessons/edit_lesson.html', dict(form=form, subject=subject, lesson=lesson)
+    )
 
 
 @login_required
