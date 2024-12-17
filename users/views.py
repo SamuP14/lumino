@@ -17,7 +17,14 @@ def user_detail(request, user_username):
 
 @login_required
 def edit_profile(request):
-    pass
+    user = User.objects.get(username=request.user.username)
+    return render(
+        request,
+        'users/profile_detail.html',
+        dict(
+            user=user,
+        ),
+    )
 
 
 @login_required

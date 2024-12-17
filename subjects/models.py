@@ -54,5 +54,11 @@ class Lesson(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def get_absolute_url(self):
+        return reverse(
+            'subjects:lesson-detail',
+            kwargs={'subject_code': self.subject.code, 'lesson_pk': self.pk},
+        )
+
     def __str__(self):
         return f'Title: {self.title}, Subject: {self.subject}'

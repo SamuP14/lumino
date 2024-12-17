@@ -9,9 +9,18 @@
       <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
     </ol>
   </nav>
+
   <div class="container">
     <div class="list-group">
       <div class="list-group-item">
+        {% if not user.profile.is_student %}
+          <a href="{% url 'subjects:edit-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-warning">
+            <i class="bi bi-box-arrow-up-right"></i> Edit
+          </a>
+          <a href="{% url 'subjects:delete-lesson' subject.code lesson.pk %}" class="ms-3 btn btn-danger">
+            <i class="bi bi-box-arrow-up-right"></i> Delete
+          </a>
+        {% endif %}
         <h5>{{ lesson.title }}</h5>
         <p class="mt-3" style="text-align: justify;">
           {{ lesson.content }}
