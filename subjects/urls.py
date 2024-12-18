@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -8,15 +8,39 @@ urlpatterns = [
     path('', views.subject_list, name='subject-list'),
     path('enroll/', views.enroll_subjects, name='enroll-subjects'),
     path('unenroll/', views.unenroll_subjects, name='unenroll-subjects'),
-    path('<str:subject_code>/', views.subject_detail, name='subject-detail'),
-    path('<str:subject_code>/lessons/add/', views.add_lesson, name='add-lesson'),
-    path('<str:subject_code>/lessons/<int:lesson_pk>/', views.lesson_detail, name='lesson-detail'),
-    path('<str:subject_code>/lessons/<int:lesson_pk>/edit/', views.edit_lesson, name='edit-lesson'),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/',
+        views.subject_detail,
+        name='subject-detail',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/add/',
+        views.add_lesson,
+        name='add-lesson',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/',
+        views.lesson_detail,
+        name='lesson-detail',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/edit/',
+        views.edit_lesson,
+        name='edit-lesson',
+    ),
     path(
-        '<str:subject_code>/lessons/<int:lesson_pk>/delete/',
+        '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/delete/',
         views.delete_lesson,
         name='delete-lesson',
     ),
-    path('<str:subject_code>/lessons/marks/', views.mark_list, name='mark-list'),
-    path('<str:subject_code>/lessons/marks/edit/', views.edit_marks, name='edit-marks'),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/marks/',
+        views.mark_list,
+        name='mark-list',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/marks/edit/',
+        views.edit_marks,
+        name='edit-marks',
+    ),
 ]
