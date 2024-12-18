@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
@@ -74,7 +75,7 @@ def edit_lesson(request, subject_code, lesson_pk):
     else:
         if (form := EditLessonForm(subject, data=request.POST, instance=lesson)).is_valid():
             form.save()
-            return redirect(lesson)
+            messages.add_message(request, messages.INFO, 'Changes were successfully saved.')
     return render(
         request,
         'lessons/edit_lesson.html',
@@ -88,6 +89,7 @@ def delete_lesson(request, subject_code, lesson_pk):
     lesson = subject.lessons.get(pk=lesson_pk)
 
     lesson.delete()
+    messages.add_message(request, messages.INFO, 'Lesson was successfully deleted.')
     return redirect(subject)
 
 

@@ -21,6 +21,13 @@
             <a href="{% url "subjects:add-lesson" subject.code %}">Add a new lesson</a>
           {% endif %}
       </div>
+      {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
       {% for lesson in lessons %}
         <div class="list-group-item d-flex justify-content-between align-items-center">
           {{ lesson.title }}
