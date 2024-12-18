@@ -69,7 +69,6 @@ def add_lesson(request, subject_code):
 def edit_lesson(request, subject_code, lesson_pk):
     subject = Subject.objects.get(code=subject_code)
     lesson = subject.lessons.get(pk=lesson_pk)
-
     if request.method == 'GET':
         form = EditLessonForm(subject, instance=lesson)
     else:
@@ -77,7 +76,9 @@ def edit_lesson(request, subject_code, lesson_pk):
             form.save()
             return redirect(lesson)
     return render(
-        request, 'lessons/edit_lesson.html', dict(form=form, subject=subject, lesson=lesson)
+        request,
+        'lessons/edit_lesson.html',
+        dict(form=form, subject=subject, lesson=lesson),
     )
 
 

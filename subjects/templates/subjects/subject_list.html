@@ -2,7 +2,7 @@
 {% block content %}
   {% include "navbar.html" %}
   <div class="d-flex flex-start mb-3" style="margin-top: 70px;">
-    <h4>Welcome, {{ user.username }} 👋</h4>
+    <h4>Welcome to Lumino. Nice to see you!</h4>
   </div>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -10,6 +10,10 @@
     </ol>
   </nav>  
   <div class="container">
+    {% if user.profile.is_student %}
+      <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success">Enroll</a>
+      <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger">Unenroll</a>
+    {% endif %}
     <div class="list-group">
       {% for subject in subjects %}
         <div class="list-group-item d-flex justify-content-between align-items-center">

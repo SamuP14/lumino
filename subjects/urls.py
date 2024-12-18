@@ -9,21 +9,6 @@ urlpatterns = [
     path('enroll/', views.enroll_subjects, name='enroll-subjects'),
     path('unenroll/', views.unenroll_subjects, name='unenroll-subjects'),
     re_path(
-        '(?P<subject_code>[A-Z]{3})/',
-        views.subject_detail,
-        name='subject-detail',
-    ),
-    re_path(
-        '(?P<subject_code>[A-Z]{3})/lessons/add/',
-        views.add_lesson,
-        name='add-lesson',
-    ),
-    re_path(
-        '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/',
-        views.lesson_detail,
-        name='lesson-detail',
-    ),
-    re_path(
         '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/edit/',
         views.edit_lesson,
         name='edit-lesson',
@@ -34,6 +19,11 @@ urlpatterns = [
         name='delete-lesson',
     ),
     re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/',
+        views.lesson_detail,
+        name='lesson-detail',
+    ),
+    re_path(
         '(?P<subject_code>[A-Z]{3})/lessons/marks/',
         views.mark_list,
         name='mark-list',
@@ -42,5 +32,15 @@ urlpatterns = [
         '(?P<subject_code>[A-Z]{3})/lessons/marks/edit/',
         views.edit_marks,
         name='edit-marks',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/lessons/add/',
+        views.add_lesson,
+        name='add-lesson',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/',
+        views.subject_detail,
+        name='subject-detail',
     ),
 ]
