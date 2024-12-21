@@ -15,7 +15,7 @@
       <div class="list-group-item">
         <h5 class="mb-1">{{ subject.code }} // {{ subject.name }}</h5>
         <p class="mt-3">
-          Teacher: {{ subject.teacher.get_full_name }}
+          Subject taught by: {{ subject.teacher.get_full_name }} || <strong>{{ subject.teacher.get_username }}</strong>
         </p>
         {% if lessons %}
           {% if not user.profile.is_student %}

@@ -1,6 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
+from .forms import EditProfileForm
 
 
 @login_required
@@ -18,12 +21,23 @@ def user_detail(request, user_username):
 @login_required
 def edit_profile(request):
     user = User.objects.get(username=request.user.username)
+    profile = user.profile
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User profile has been successfully saved.')
+            return redirect(profile)
+        else:
+            messages.error(request, 'Error updating the profile. Please check the form.')
+    else:
+        form = EditProfileForm(instance=profile)
+
     return render(
         request,
-        'users/profile_detail.html',
-        dict(
-            user=user,
-        ),
+        'users/edit_profile.html',
+        {'form': form, 'profile': profile},
     )
 
 

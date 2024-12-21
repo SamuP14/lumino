@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
 class Profile(models.Model):
@@ -21,6 +22,9 @@ class Profile(models.Model):
         upload_to='avatars',
         default='avatars/noavatar.png',
     )
+
+    def get_absolute_url(self):
+        return reverse('user-detail', kwargs={'user_username': self.user.username})
 
     def is_student(self):
         if self.user.profile.role == self.Role.STUDENT:

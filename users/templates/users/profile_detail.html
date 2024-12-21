@@ -1,27 +1,38 @@
 {% extends "base.html" %}
-
+{% load thumbnail %}
 {% block app %}Users{% endblock %}{% block title %} | {{ user.username }}{% endblock %}
 
 {% block content %}
-  {% include "navbar.html" %}
-    
-  <div class="card" style="margin-top: 70px;">
-    <div class="card-body">
-      <div style="width: 100px; height: 100px; border-radius: 50%; background-image: url('{{ user.profile.avatar.url }}'); background-size: cover; background-position: center;">
-      </div>
-      <p class="card-title">
-        <h5>
-          Username: {{ user.username }}
-        </h5>
-        <h6>Full name: {{ user.first_name }} {{ user.last_name }}</h6>
-      </p>
-      <p class="card-text">
-        Bio:
-        <p style="text-align: justify;">
-          {{ user.profile.bio }}
-        </p>
-      </p>
-      <a href="{% url "subjects:subject-list" %}" class="btn btn-primary">Back to subjects</a>
+    {% include "navbar.html" %}
+    <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>';">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-2">Users</li>
+            <li class="breadcrumb-item active" aria-current="page"><strong>{{ user.username }}'s</strong> Profile</li>
+        </ol>
+    </nav>
+    <div class="card mt-4 shadow-sm border-0 rounded-3 d-flex flex-column">
+        <div class="card-body d-flex align-items-center gap-4 p-4 flex-grow-1">
+            {% if user.profile.avatar %}
+                {% thumbnail user.profile.avatar "200x200" crop="center" format="PNG" as avatar %}
+                    <img src="{{ avatar.url }}" alt="Thumbnail profile avatar" style="border-radius: 10px;">
+                {% endthumbnail %}
+            {% else %}
+                <div class="d-flex justify-content-center align-items-center bg-light rounded-circle" style="width: 150px; height: 150px;">
+                    <p class="text-muted mb-0" style="font-size: 14px;">No avatar</p>
+                </div>
+            {% endif %}
+            <div class="flex-grow-1">
+                <h5 class="m-0 text-dark" style="font-size: 20px; font-weight: 600;">{{ user.username }}</h5>
+                <p class="mb-2 text-muted" style="font-size: 14px;">
+                    <strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}
+                </p>
+                <p class="mb-0 text-muted" style="font-size: 14px; line-height: 1.6;">
+                    {{ user.profile.bio|default:"This user has not added a bio yet." }}
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'users:edit-profile' %}" class="btn btn-warning">Edit Profile</a>
+        </div>
     </div>
-  </div>
 {% endblock %}
