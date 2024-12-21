@@ -26,9 +26,9 @@
                 <p class="mb-2 text-muted" style="font-size: 14px;">
                     <strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}
                 </p>
-                <p class="mb-0 text-muted" style="font-size: 14px; line-height: 1.6;">
+                <p class="mb-0 text-muted text-justify" style="font-size: 14px; line-height: 1.6; text-align: justify !important;">
                     {{ user.profile.bio|default:"This user has not added a bio yet." }}
-                </p>
+                </p>                
             </div>
         </div>
         <div class="card-footer">
