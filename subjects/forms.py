@@ -1,7 +1,7 @@
-from crispy_bootstrap5.bootstrap5 import FloatingField
+from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
-from django import forms
+from crispy_bootstrap5.bootstrap5 import FloatingField
 
 from .models import Lesson
 
@@ -39,6 +39,13 @@ class EditLessonForm(forms.ModelForm):
             'title',
             'content',
         )
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'style': 'width: 100%; height: 300px;',  # Ajusta el tamaño directamente
+                'class': 'form-control',
+                'placeholder': 'Escribe el contenido aquí...',
+            }),
+        }
 
     def __init__(self, subject, *args, **kwargs):
         super().__init__(*args, **kwargs)

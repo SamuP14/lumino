@@ -10,9 +10,11 @@
     </ol>
   </nav>  
   <div class="container">
-    {% if user.profile.is_student %}
-      <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success">Enroll</a>
-      <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger">Unenroll</a>
+    {% if subjects %}
+      {% if user.profile.is_student %}
+        <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success">Enroll</a>
+        <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger">Unenroll</a>
+      {% endif %}
     {% endif %}
     <div class="list-group">
       {% for subject in subjects %}
@@ -28,8 +30,12 @@
       {% empty %}
         {% if user.profile.is_student %}
           <div class="alert alert-warning" role="alert">
-            You don't have any subjects yet. 
+            You are not yet enrolled in any subject 
             <a href="{% url "subjects:enroll-subjects" %}" class="alert-link">Enroll in one or more of our subjects here!</a>
+          </div>
+        {% else %}
+          <div class="alert alert-warning" role="alert">
+            You are not teaching any subject yet.
           </div>
         {% endif %}
       {% endfor %}

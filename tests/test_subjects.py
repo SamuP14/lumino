@@ -234,11 +234,14 @@ def test_request_grade_certificate_is_forbidden_for_teachers(client, teacher):
 
 @pytest.mark.django_db
 def test_request_grade_certificate_works(client, student, settings, monkeypatch):
+    sent_mail = False
+
     def mock_deliver_certificate(base_url, test_student):
         deliver_certificate(base_url, test_student)
 
     def mock_send_email(*args, **kwargs):
-        assert True
+        nonlocal sent_mail
+        sent_mail = True
 
     try:
         monkeypatch.setattr(deliver_certificate, 'delay', mock_deliver_certificate)
@@ -252,8 +255,11 @@ def test_request_grade_certificate_works(client, student, settings, monkeypatch)
         clean_response = re.sub(r'<.*?>', '', response.content.decode())
         clean_response = re.sub(r' {2,}', ' ', clean_response)
         msg = f'You will get the grade certificate quite soon at {student.email}'
-        assert msg in clean_response
-        assert certificate.exists()
+        assert msg in clean_response, 'El mensaje de feedback no se ha dado correctamente'
+        assert (
+            certificate.exists()
+        ), 'El certificado de calificaciones no se ha generado en la ruta esperada'
+        assert sent_mail, 'No se ha invocado al método send() de EmailMessage.'
     except Exception as err:
         raise err
     finally:
