@@ -1,6 +1,17 @@
-{% comment %} {% load user_extras %} {% endcomment %}
 
+{% load thumbnail %}
 <span>
   {% comment %} {% include "users/user/includes/avatar.html" with user=student size="30x30" %} {% endcomment %}
-  <a href="{% url 'user-detail' student.username %}" class="ms-1">{{ student.first_name }} {{ student.last_name }}</a>
+  {% if student.profile.avatar %}
+    {% thumbnail student.profile.avatar "30x30" format="PNG" as avatar %}
+      <img src="{{ avatar.url }}" alt="Thumbnail profile avatar">
+    {% endthumbnail %}
+  {% else %}
+    <div class="d-flex justify-content-center align-items-center bg-light rounded-circle" style="width: 150px; height: 150px;">
+      <p class="text-muted mb-0" style="font-size: 14px;">No avatar</p>
+    </div>
+  {% endif %}
+  <a href="{% url 'user-detail' student.username %}" class="ms-1 link-offset-2 link-underline link-underline-opacity-0">
+    {{ student.first_name }} {{ student.last_name }} ({{ student.username }})
+  </a>
 </span>
