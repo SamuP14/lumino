@@ -97,4 +97,4 @@ Este proyecto está licenciado bajo la licencia **CC BY 4.0**. Consulta el archi
 
 ## Agradecimientos
 
-Desarrollado como parte del curso "Aprende Python comiendo pipas" de **pypas.es**.
+Desarrollado como parte del curso "Aprende Python comiendo pipas" de **aprendepython.es**.
