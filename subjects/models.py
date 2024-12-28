@@ -1,24 +1,26 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 
 
 class Enrollment(models.Model):
     student = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='student_enrollments',
-        on_delete=models.CASCADE,
+        settings.AUTH_USER_MODEL, related_name='enrollments', on_delete=models.CASCADE
     )
     subject = models.ForeignKey(
-        'subjects.Subject',
-        related_name='subject_enrollments',
-        on_delete=models.CASCADE,
+        'subjects.Subject', related_name='enrollments', on_delete=models.CASCADE
     )
     enrolled_at = models.DateField(auto_now_add=True)
-    mark = models.PositiveSmallIntegerField(null=True)
+    mark = models.PositiveSmallIntegerField(
+        blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+
+    class Meta:
+        ordering = ['student__last_name', 'student__first_name']
 
     def __str__(self):
-        return f'Student: {self.student}, Enrolled At: {self.enrolled_at}'
+        return f'{self.student} ({self.subject}) {self.mark}'
 
 
 class Subject(models.Model):

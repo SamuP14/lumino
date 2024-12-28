@@ -23,9 +23,16 @@
             <h5 class="mb-1">Code: {{ subject.code }}</h5>
             <p class="mb-1">Name: {{ subject.name }}</p>
           </div>
-          <a href="{{ subject.get_absolute_url }}" class="ms-3 btn btn-info">
-            <i class="bi bi-box-arrow-up-right"></i> View
-          </a>
+          <div>
+            <a href="{{ subject.get_absolute_url }}" class="ms-3 btn btn-info">
+              <i class="bi bi-box-arrow-up-right"></i> View
+            </a>
+            {% if not user.profile.is_student %}
+              <a href="{% url "subjects:edit-marks" subject.code %}" class="ms-3 btn btn-warning">
+                <i class="bi bi-box-arrow-up-right"></i> Edit Marks
+              </a>
+            {% endif %}
+          </div>
         </div>      
       {% empty %}
         {% if user.profile.is_student %}

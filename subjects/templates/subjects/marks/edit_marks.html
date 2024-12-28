@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% load subject_extras %}
+
+{% comment %} {% block styles %}
+  <link rel="stylesheet" href="{% static 'subjects/css/edit_marks.css' %}">
+{% endblock %} {% endcomment %}
+
+{% block content %}
+  {% include "navbar.html" %}
+  <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>';">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item ms-2"><a href="{% url "subjects:subject-list" %}">Subjects</a></li>
+      <li class="breadcrumb-item"><a href="{% url "subjects:subject-detail" subject.code %}">{{ subject.code }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'subjects:mark-list' subject.code%}">Marks</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit Marks</li>
+    </ol>
+  </nav>
+  {% crispy formset helper %}
+{% endblock %}

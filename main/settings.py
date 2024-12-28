@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_browser_reload',
     'sorl.thumbnail',
+    'markdownify.apps.MarkdownifyConfig',
 ]
 
 MIDDLEWARE = [

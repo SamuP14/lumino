@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
-from .forms import AddLessonForm, EditLessonForm
-from .models import Subject
+from .forms import AddLessonForm, EditLessonForm, EditMarkForm, EditMarkFormSetHelper
+from .models import Enrollment, Subject
 
 
 @login_required
@@ -99,8 +101,24 @@ def mark_list(request, subject):
 
 
 @login_required
-def edit_marks(request):
-    pass
+def edit_marks(request, subject_code: str):
+    subject = Subject.objects.get(code=subject_code)
+
+    MarkFormSet = modelformset_factory(Enrollment, EditMarkForm, extra=0)
+    queryset = subject.enrollments.all()
+    if request.method == 'POST':
+        if (formset := MarkFormSet(queryset=queryset, data=request.POST)).is_valid():
+            formset.save()
+            messages.add_message(request, messages.SUCCESS, 'Marks were successfully saved.')
+            return redirect(reverse('subjects:edit-marks', kwargs={'subject_code': subject_code}))
+    else:
+        formset = MarkFormSet(queryset=queryset)
+    helper = EditMarkFormSetHelper()
+    return render(
+        request,
+        'subjects/marks/edit_marks.html',
+        dict(subject=subject, formset=formset, helper=helper),
+    )
 
 
 @login_required

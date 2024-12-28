@@ -1,9 +1,9 @@
-from crispy_bootstrap5.bootstrap5 import FloatingField
+from crispy_bootstrap5.bootstrap5 import Field, FloatingField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
+from crispy_forms.layout import HTML, Layout, Row, Submit
 from django import forms
 
-from .models import Lesson
+from .models import Enrollment, Lesson
 
 
 class AddLessonForm(forms.ModelForm):
@@ -59,3 +59,25 @@ class EditLessonForm(forms.ModelForm):
             FloatingField('content'),
             Submit('submit', 'Submit', css_class='w-100 mt-2 mb-2'),
         )
+
+
+class EditMarkForm(forms.ModelForm):
+    class Meta:
+        model = Enrollment
+        fields = ['mark']
+
+
+class EditMarkFormSetHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form_show_labels = False
+        self.layout = Layout(
+            Row(
+                HTML(
+                    '{% load subject_extras %} <div class="col-md-4">{% student_label formset forloop.counter0 %}</div>'
+                ),
+                Field('mark', wrapper_class='col-md-2'),
+                css_class='align-items-baseline',
+            )
+        )
+        self.add_input(Submit('save', 'Save marks', css_class='mt-3'))

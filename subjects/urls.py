@@ -24,14 +24,14 @@ urlpatterns = [
         name='lesson-detail',
     ),
     re_path(
-        '(?P<subject_code>[A-Z]{3})/lessons/marks/',
-        views.mark_list,
-        name='mark-list',
-    ),
-    re_path(
-        '(?P<subject_code>[A-Z]{3})/lessons/marks/edit/',
+        '(?P<subject_code>[A-Z]{3})/marks/edit/',
         views.edit_marks,
         name='edit-marks',
+    ),
+    re_path(
+        '(?P<subject_code>[A-Z]{3})/marks/',
+        views.mark_list,
+        name='mark-list',
     ),
     re_path(
         '(?P<subject_code>[A-Z]{3})/lessons/add/',

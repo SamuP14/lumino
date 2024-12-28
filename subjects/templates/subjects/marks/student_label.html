@@ -1,0 +1,6 @@
+{% comment %} {% load user_extras %} {% endcomment %}
+
+<span>
+  {% comment %} {% include "users/user/includes/avatar.html" with user=student size="30x30" %} {% endcomment %}
+  <a href="{% url 'user-detail' student.username %}" class="ms-1">{{ student.first_name }} {{ student.last_name }}</a>
+</span>
