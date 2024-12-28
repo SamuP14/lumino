@@ -6,8 +6,14 @@
   {% include "navbar.html" %}
   <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>';">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item ms-2"><a href="{% url "subjects:subject-list" %}">Subjects</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ subject.code }}</li>
+      <li class="breadcrumb-item ms-2">
+        <a href="{% url "subjects:subject-list" %}" class="link-offset-2 link-underline link-underline-opacity-0">
+          Subjects
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ subject.code }}
+      </li>
     </ol>
   </nav>
   <div class="container">

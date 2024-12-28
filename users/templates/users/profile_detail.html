@@ -24,7 +24,7 @@
             <div class="flex-grow-1">
                 <h5 class="m-0 text-dark" style="font-size: 20px; font-weight: 600;">{{ user.username }}</h5>
                 <p class="mb-2 text-muted" style="font-size: 14px;">
-                    <strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}
+                    <strong>Full Name:</strong> {{ user.last_name }}, {{ user.first_name }}
                 </p>
                 <p class="mb-0 text-muted text-justify" style="font-size: 14px; line-height: 1.6; text-align: justify !important;">
                     {{ user.profile.bio|default:"This user has not added a bio yet." }}

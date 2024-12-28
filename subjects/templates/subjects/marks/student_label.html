@@ -12,6 +12,6 @@
     </div>
   {% endif %}
   <a href="{% url 'user-detail' student.username %}" class="ms-1 link-offset-2 link-underline link-underline-opacity-0">
-    {{ student.first_name }} {{ student.last_name }} ({{ student.username }})
+    {{ student.last_name }}, {{ student.first_name }} ({{ student.username }})
   </a>
 </span>
