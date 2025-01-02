@@ -32,5 +32,11 @@ class Profile(models.Model):
         else:
             return False
 
+    def get_role(self):
+        if self.role == 'S':
+            return 'Student'
+        else:
+            return 'Teacher'
+
     def __str__(self):
         return f'User: {self.user}, Role: {self.role}'
