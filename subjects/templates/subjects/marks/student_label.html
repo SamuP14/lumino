@@ -2,7 +2,7 @@
 {% load thumbnail %}
 <span>
   {% if student.profile.avatar %}
-    {% thumbnail student.profile.avatar "30x30" format="PNG" as avatar %}
+    {% thumbnail student.profile.avatar "30x30" crop="center" format="PNG" as avatar %}
       <img src="{{ avatar.url }}" alt="Thumbnail profile avatar">
     {% endthumbnail %}
   {% else %}

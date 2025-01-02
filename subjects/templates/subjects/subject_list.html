@@ -28,8 +28,8 @@
               <i class="bi bi-box-arrow-up-right"></i> View
             </a>
             {% if not user.profile.is_student %}
-              <a href="{% url "subjects:edit-marks" subject.code %}" class="ms-3 btn btn-warning">
-                <i class="bi bi-box-arrow-up-right"></i> Edit Marks
+              <a href="{% url "subjects:mark-list" subject.code %}" class="ms-3 btn btn-success">
+                <i class="bi bi-box-arrow-up-right"></i> Marks
               </a>
             {% endif %}
           </div>

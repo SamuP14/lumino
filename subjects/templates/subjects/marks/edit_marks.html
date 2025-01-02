@@ -3,7 +3,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load subject_extras %}
-
+{% block title %} | {{ subject.code }} | Edit Marks{% endblock %}
 {% block content %}
   {% include "navbar.html" %}
   <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>';">

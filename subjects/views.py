@@ -23,7 +23,7 @@ def subject_list(request):
 
 
 @login_required
-def subject_detail(request, subject_code):
+def subject_detail(request, subject_code: str):
     if request.user.profile.is_student():
         subject = request.user.students_subjects.get(code=subject_code)
     else:
@@ -42,7 +42,7 @@ def subject_detail(request, subject_code):
 
 
 @login_required
-def lesson_detail(request, subject_code, lesson_pk):
+def lesson_detail(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
     lesson = subject.lessons.get(pk=lesson_pk)
 
@@ -57,7 +57,7 @@ def lesson_detail(request, subject_code, lesson_pk):
 
 
 @login_required
-def add_lesson(request, subject_code):
+def add_lesson(request, subject_code: str):
     subject = Subject.objects.get(code=subject_code)
     if request.method == 'GET':
         form = AddLessonForm(subject)
@@ -69,7 +69,7 @@ def add_lesson(request, subject_code):
 
 
 @login_required
-def edit_lesson(request, subject_code, lesson_pk):
+def edit_lesson(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
     lesson = subject.lessons.get(pk=lesson_pk)
     if request.method == 'GET':
@@ -86,7 +86,7 @@ def edit_lesson(request, subject_code, lesson_pk):
 
 
 @login_required
-def delete_lesson(request, subject_code, lesson_pk):
+def delete_lesson(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
     lesson = subject.lessons.get(pk=lesson_pk)
 
@@ -96,8 +96,14 @@ def delete_lesson(request, subject_code, lesson_pk):
 
 
 @login_required
-def mark_list(request, subject):
-    pass
+def mark_list(request, subject_code: str):
+    subject = Subject.objects.get(code=subject_code)
+    queryset = subject.enrollments.all()
+    return render(
+        request,
+        'subjects/marks/mark_list.html',
+        dict(subject=subject, enrollments=queryset),
+    )
 
 
 @login_required

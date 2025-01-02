@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load thumbnail %}
+{% block title %} | {{ subject.code }} | Marks{% endblock %}
+
+{% block content %}
+  {% include "navbar.html" %}
+  <nav aria-label="breadcrumb" style="margin-top: 70px; --bs-breadcrumb-divider: '>'; ">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item ms-2">
+        <a href="{% url "subjects:subject-list" %}" class="link-offset-2 link-underline link-underline-opacity-0">
+          Subjects
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="{{ subject.get_absolute_url }}" class="link-offset-2 link-underline link-underline-opacity-0">
+          {{ subject.code }}
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Marks
+      </li>
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="row bg-primary text-white py-2 rounded">
+      <div class="col-md-1 text-center">Avatar</div>
+      <div class="col-md-7">Student</div>
+      <div class="col-md-2 text-center">Mark</div>
+      <div class="col-md-2 text-center">Actions</div>
+    </div>
+    {% for enrollment in enrollments %}
+      <div class="row align-items-center py-2 border-bottom">
+        <div class="col-md-1 text-center">
+          {% if enrollment.student.profile.avatar %}
+            {% thumbnail enrollment.student.profile.avatar "50x50" crop="center" format="PNG" as avatar %}
+              <img src="{{ avatar.url }}" alt="Thumbnail profile avatar">
+            {% endthumbnail %}
+          {% else %}
+            <div class="d-flex justify-content-center align-items-center bg-light rounded-circle" style="width: 50px; height: 50px;">
+              <p class="text-muted mb-0" style="font-size: 12px;">No avatar</p>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-md-7">
+          <a href="{% url 'user-detail' enrollment.student.username %}" class="ms-1 link-offset-2 link-underline link-underline-opacity-0">
+            <strong>{{ enrollment.student.last_name }}, {{ enrollment.student.first_name }}</strong> 
+            <small class="text-muted">({{ enrollment.student.username }})</small>
+          </a>
+        </div>
+        <div class="col-md-2 text-center">
+          <span class="{% if enrollment.mark >= 5 %}text-success{% else %}text-danger{% endif %}">
+            {{ enrollment.mark|default:"-" }}
+          </span>
+        </div>
+        <div class="col-md-2 text-center">
+          <a href="{% url 'subjects:edit-marks' subject.code%}" class="ms-3 btn btn-warning">
+            <i class="bi bi-pencil-square"></i> Edit
+          </a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="row py-3">
+        <div class="col-md-12 text-center">
+          <p class="text-muted">No enrollments found.</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
