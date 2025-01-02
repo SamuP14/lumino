@@ -1,7 +1,6 @@
 
 {% load thumbnail %}
 <span>
-  {% comment %} {% include "users/user/includes/avatar.html" with user=student size="30x30" %} {% endcomment %}
   {% if student.profile.avatar %}
     {% thumbnail student.profile.avatar "30x30" format="PNG" as avatar %}
       <img src="{{ avatar.url }}" alt="Thumbnail profile avatar">
