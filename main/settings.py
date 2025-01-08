@@ -144,3 +144,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'email-host-user'
+EMAIL_HOST_PASSWORD = 'email-host-password'
+DEFAULT_FROM_EMAIL = 'default-from-email'
