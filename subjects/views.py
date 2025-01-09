@@ -4,6 +4,7 @@ from django.forms import modelformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from .decorators import student_required, teacher_required
 from .forms import AddLessonForm, EditLessonForm, EditMarkForm, EditMarkFormSetHelper
 from .models import Enrollment, Subject
 
@@ -56,6 +57,7 @@ def lesson_detail(request, subject_code: str, lesson_pk: int):
     )
 
 
+@teacher_required
 @login_required
 def add_lesson(request, subject_code: str):
     subject = Subject.objects.get(code=subject_code)
@@ -68,6 +70,7 @@ def add_lesson(request, subject_code: str):
     return render(request, 'lessons/add_lesson.html', dict(form=form))
 
 
+@teacher_required
 @login_required
 def edit_lesson(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
@@ -85,6 +88,7 @@ def edit_lesson(request, subject_code: str, lesson_pk: int):
     )
 
 
+@teacher_required
 @login_required
 def delete_lesson(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
@@ -127,11 +131,13 @@ def edit_marks(request, subject_code: str):
     )
 
 
+@student_required
 @login_required
 def enroll_subjects(request):
     pass
 
 
+@student_required
 @login_required
 def unenroll_subjects(request):
     pass
