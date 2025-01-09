@@ -13,7 +13,7 @@ urlpatterns = [
         views.edit_lesson,
         name='edit-lesson',
     ),
-    path(
+    re_path(
         '(?P<subject_code>[A-Z]{3})/lessons/(?P<lesson_pk>\d+)/delete/',
         views.delete_lesson,
         name='delete-lesson',

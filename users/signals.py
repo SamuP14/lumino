@@ -9,6 +9,6 @@ from .models import Profile
 def create_user_profile_with_new_user(sender, instance, created, raw, **kwargs):
     if created:
         if not raw:
-            profile = Profile(user=instance)
+            profile = Profile.objects.create(user=instance)
             instance.profile = profile
             instance.save()
