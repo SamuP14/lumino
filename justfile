@@ -127,7 +127,7 @@ rq: check-venv redis
 dump-data: gen-data
     #!/usr/bin/env bash
     mkdir -p fixtures
-    ./manage.py dumpdata --format json --indent 2 auth -o fixtures/auth.json
+    ./manage.py dumpdata --format json --indent 2 auth.User -o fixtures/auth.json
     ./manage.py dumpdata --format json --indent 2 users -o fixtures/users.json
     ./manage.py dumpdata --format json --indent 2 subjects -o fixtures/subjects.json
 
