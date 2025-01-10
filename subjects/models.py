@@ -32,7 +32,7 @@ class Subject(models.Model):
     teacher = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='teacher_subjects',
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
     students = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
