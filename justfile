@@ -137,7 +137,6 @@ clean-data:
     #!/usr/bin/env bash
     ./manage.py shell -c '
     from django.contrib.auth import get_user_model
-    from django.core.management.base import BaseCommand
     from subjects.models import Subject
 
     Subject.objects.all().delete()
@@ -150,7 +149,6 @@ show-users role:
     #!/usr/bin/env bash
     ./manage.py shell -c '
     from django.contrib.auth import get_user_model
-    from django.core.management.base import BaseCommand
     from users.models import Profile
 
     User = get_user_model()
