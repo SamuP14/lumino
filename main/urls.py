@@ -27,6 +27,7 @@ import users.views
 urlpatterns = [
     path('', shared.views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('setlang/<str:langcode>/', shared.views.setlang, name='setlang'),
     path('subjects/', include('subjects.urls')),
     path('users/<str:user_username>/', users.views.user_detail, name='user-detail'),
     path('user/', include('users.urls')),

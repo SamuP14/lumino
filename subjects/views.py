@@ -19,6 +19,7 @@ from .models import Enrollment, Subject
 
 @login_required
 def subject_list(request):
+    messages.add_message(request, messages.INFO, 'Welcome to Lumino. Nice to see you!')
     return render(
         request,
         'subjects/subject_list.html',

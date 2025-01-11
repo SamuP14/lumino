@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand"><i class="bi bi-lightbulb-fill"></i> Lumino</a>
@@ -18,6 +20,9 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> <!-- Añadir dropdown-menu-end -->
               <li><a class="dropdown-item" href="{% url 'user-detail' user.username %}"><i class="bi bi-person-circle"></i> {{ user.username }}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'setlang' 'en' %}?next={{ request.path }}">{% translate "English" %} 🇺🇸</a></li>
+              <li><a class="dropdown-item" href="{% url 'setlang' 'es' %}?next={{ request.path }}">{% translate "Spanish" %} 🇪🇸</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="bi bi-box-arrow-in-left"></i> Logout</a></li>
             </ul>
