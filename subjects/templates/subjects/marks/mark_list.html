@@ -72,6 +72,11 @@
         <div class="col-md-12 text-center">
           <p class="text-muted">No enrollments found.</p>
         </div>
+        <div class="col-md-2 text-center">
+          <a href="{% url 'subjects:edit-marks' subject.code%}" class="ms-3 btn btn-warning" hidden>
+            <i class="bi bi-pencil-square"></i> Edit
+          </a>
+        </div>
       </div>
     {% endfor %}
   </div>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
   {% include "navbar.html" %}
   <div class="d-flex flex-start mb-3" style="margin-top: 70px;">
@@ -8,7 +9,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item active ms-2" aria-current="page">My Subjects</li>
     </ol>
-  </nav>  
+  </nav>
   <div class="container">
     {% if messages %}
       <div class="alert alert-info">
@@ -40,7 +41,7 @@
               </a>
             {% endif %}
           </div>
-        </div>      
+        </div>
       {% empty %}
         {% if user.profile.is_student %}
           <div class="alert alert-warning" role="alert">

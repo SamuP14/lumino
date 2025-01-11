@@ -19,15 +19,9 @@ from .models import Enrollment, Subject
 
 @login_required
 def subject_list(request):
-    if request.user.profile.is_student():
-        subjects = request.user.students_subjects.all()
-    else:
-        subjects = request.user.teacher_subjects.all()
-
     return render(
         request,
         'subjects/subject_list.html',
-        dict(subjects=subjects),
     )
 
 
