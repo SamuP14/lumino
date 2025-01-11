@@ -10,6 +10,13 @@
     </ol>
   </nav>  
   <div class="container">
+    {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
     {% if subjects %}
       {% if user.profile.is_student %}
         <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success">Enroll</a>

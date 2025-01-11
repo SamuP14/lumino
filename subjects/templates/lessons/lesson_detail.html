@@ -19,6 +19,13 @@
       </li>
     </ol>
   </nav>
+  {% if messages %}
+    <div class="alert alert-info">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="container">
     <div class="list-group">
       <div class="list-group-item">

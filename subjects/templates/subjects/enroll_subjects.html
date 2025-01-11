@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Enroll in Subjects</h2>
+
+  {% if messages %}
+    <div class="alert alert-info">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="id_subjects">Choose subjects to enroll in:</label>
+      {{ form.subjects }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enroll</button>
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <strong>There were errors in the form. Please fix them and try again.</strong>
+      </div>
+    {% endif %}
+  </form>
+{% endblock %}

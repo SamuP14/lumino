@@ -23,6 +23,13 @@
       </li>
     </ol>
   </nav>
+  {% if messages %}
+    <div class="alert alert-info">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="container">
     <div class="row bg-primary text-white py-2 rounded">
       <div class="col-md-1 text-center">Avatar</div>

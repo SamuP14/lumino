@@ -1,15 +1,20 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
+from django.db.models import Avg
+
+from subjects.models import Enrollment, Subject
 
 
 class Command(BaseCommand):
-    help = 'Delete all comments for the given post.'
+    help = 'Displays the average grades of all subjects'
 
-    def add_arguments(self, parser):
-        parser.add_argument('subject_codes', nargs='+', type=str)
+    def handle(self, *args, **kwargs):
+        subjects = Subject.objects.all()
+        for subject in subjects:
+            enrollments = Enrollment.objects.filter(subject=subject).exclude(mark__isnull=True)
 
-    def handle(self, *args, **options):
-        for subject_code in options['subject_codes']:
-            try:
-                pass
-            except:
-                raise CommandError()
+            if enrollments.exists():
+                average = enrollments.aggregate(Avg('mark'))['mark__avg']
+            else:
+                average = 0
+
+            self.stdout.write(f'{subject.code}: {average:.2f}')
