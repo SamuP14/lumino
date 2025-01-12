@@ -148,19 +148,18 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+CERTIFICATE_DIR = MEDIA_ROOT / 'certificates'
 
-EMAIL_HOST = 'smtp-relay.brevo.com'
-EMAIL_PORT = '587'
+EMAIL_HOST = 'email-host'
+EMAIL_PORT = 'email-port'
 EMAIL_HOST_USER = 'email-host-user'
 EMAIL_HOST_PASSWORD = 'email-host-password'
 DEFAULT_FROM_EMAIL = 'default-from-email'
 
 RQ_QUEUES = {
     'default': {
-        'USE_REDIS_CACHE': 'default',
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
     }
 }

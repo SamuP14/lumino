@@ -189,13 +189,10 @@ def unenroll_subjects(request):
 @student_required
 @login_required
 def request_certificate(request):
-    # Procesar solicitud de certificado
-    # Llamar a la tarea asíncrona para enviar el correo
     deliver_certificate.delay(request.build_absolute_uri(), request.user)
 
-    # Redirigir a la página de confirmación
     return render(
         request,
-        'subjects/certificate_confirmation.html',
+        'subjects/marks/certificate_confirmation.html',
         {'message': f'You will get the grade certificate quite soon at {request.user.email}'},
     )
