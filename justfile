@@ -219,3 +219,7 @@ pytest-k test:
 # Clear the terminal
 cls:
     clear
+
+# Open proyect docs
+doc:
+    pypas doc

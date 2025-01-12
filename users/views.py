@@ -45,11 +45,6 @@ def edit_profile(request):
 
 
 @login_required
-def request_certificate(request):
-    pass
-
-
-@login_required
 def leave(request):
     user = request.user
 

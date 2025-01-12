@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'sorl.thumbnail',
     'markdownify.apps.MarkdownifyConfig',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,13 @@ EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'email-host-user'
 EMAIL_HOST_PASSWORD = 'email-host-password'
 DEFAULT_FROM_EMAIL = 'default-from-email'
+
+RQ_QUEUES = {
+    'default': {
+        'USE_REDIS_CACHE': 'default',
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}

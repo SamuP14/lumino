@@ -27,16 +27,10 @@ class Profile(models.Model):
         return reverse('user-detail', kwargs={'user_username': self.user.username})
 
     def is_student(self):
-        if self.user.profile.role == self.Role.STUDENT:
-            return True
-        else:
-            return False
+        return self.role == self.Role.STUDENT
 
     def get_role(self):
-        if self.role == 'S':
-            return 'Student'
-        else:
-            return 'Teacher'
+        return self.get_role_display()
 
     def __str__(self):
         return f'User: {self.user}, Role: {self.role}'

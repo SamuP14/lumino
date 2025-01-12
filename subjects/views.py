@@ -15,6 +15,7 @@ from .forms import (
     UnenrollSubjectsForm,
 )
 from .models import Enrollment, Subject
+from .tasks import deliver_certificate
 
 
 @login_required
@@ -182,4 +183,19 @@ def unenroll_subjects(request):
         request,
         'subjects/unenroll_subjects.html',
         {'form': form},
+    )
+
+
+@student_required
+@login_required
+def request_certificate(request):
+    # Procesar solicitud de certificado
+    # Llamar a la tarea asíncrona para enviar el correo
+    deliver_certificate.delay(request.build_absolute_uri(), request.user)
+
+    # Redirigir a la página de confirmación
+    return render(
+        request,
+        'subjects/certificate_confirmation.html',
+        {'message': f'You will get the grade certificate quite soon at {request.user.email}'},
     )
