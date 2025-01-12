@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .decorators import student_required, teacher_required
+from .decorators import enrolled_required, student_required, teacher_required
 from .forms import (
     AddLessonForm,
     EditLessonForm,
@@ -26,6 +26,7 @@ def subject_list(request):
     )
 
 
+@enrolled_required
 @login_required
 def subject_detail(request, subject_code: str):
     if request.user.profile.is_student():
@@ -45,6 +46,7 @@ def subject_detail(request, subject_code: str):
     )
 
 
+@enrolled_required
 @login_required
 def lesson_detail(request, subject_code: str, lesson_pk: int):
     subject = Subject.objects.get(code=subject_code)
@@ -103,6 +105,7 @@ def delete_lesson(request, subject_code: str, lesson_pk: int):
     return redirect(subject)
 
 
+@teacher_required
 @login_required
 def mark_list(request, subject_code: str):
     subject = Subject.objects.get(code=subject_code)
@@ -114,6 +117,7 @@ def mark_list(request, subject_code: str):
     )
 
 
+@teacher_required
 @login_required
 def edit_marks(request, subject_code: str):
     subject = Subject.objects.get(code=subject_code)

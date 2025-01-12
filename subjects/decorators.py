@@ -4,6 +4,44 @@ from django.shortcuts import redirect
 from .models import Subject
 
 
+def enrolled_required(function):
+    def wrap(request, *args, **kwargs):
+        subject_code = kwargs.get('subject_code')
+
+        if not request.user.is_authenticated:
+            return redirect(f'/login/?next={request.path}')
+
+        if not hasattr(request.user, 'profile'):
+            return HttpResponseForbidden()
+
+        # Si el usuario es un estudiante
+        if request.user.profile.role == 'S':
+            try:
+                subject = Subject.objects.get(code=subject_code)
+                # Verifica si el estudiante está matriculado en la asignatura
+                if subject not in request.user.students_subjects.all():
+                    return HttpResponseForbidden()
+            except Subject.DoesNotExist:
+                return HttpResponseForbidden()
+
+        # Si el usuario es un profesor
+        elif request.user.profile.role == 'T':
+            try:
+                subject = Subject.objects.get(code=subject_code)
+                # Verifica si el profesor tiene la asignatura asignada
+                if subject not in request.user.teacher_subjects.all():
+                    return HttpResponseForbidden()
+            except Subject.DoesNotExist:
+                return HttpResponseForbidden()
+
+        else:
+            return HttpResponseForbidden()
+
+        return function(request, *args, **kwargs)
+
+    return wrap
+
+
 def student_required(function):
     def wrap(request, *args, **kwargs):
         if not request.user.is_authenticated:
