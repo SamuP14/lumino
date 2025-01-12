@@ -143,27 +143,18 @@ def edit_marks(request, subject_code: str):
 @login_required
 def enroll_subjects(request):
     if not hasattr(request.user, 'profile') or request.user.profile.role != 'S':
-        return HttpResponseForbidden(
-            'You are not allowed to enroll in subjects.'
-        )  # Solo para alumnos
+        return HttpResponseForbidden('You are not allowed to enroll in subjects.')
 
-    # Si es un POST, procesamos el formulario
     if request.method == 'POST':
-        form = EnrollSubjectsForm(
-            request.POST, user=request.user
-        )  # Pasamos el usuario actual al formulario
+        form = EnrollSubjectsForm(request.POST, user=request.user)
         if form.is_valid():
-            form.save(user=request.user)  # Guardamos las inscripciones
-            messages.success(
-                request, 'Successfully enrolled in the chosen subjects.'
-            )  # Mensaje de éxito
-            return redirect('subjects:subject-list')  # Redirigir a la lista de asignaturas
+            form.save(user=request.user)
+            messages.success(request, 'Successfully enrolled in the chosen subjects.')
+            return redirect('subjects:subject-list')
 
     else:
-        # Si es un GET, creamos el formulario vacío
         form = EnrollSubjectsForm(user=request.user)
 
-    # Renderizamos el formulario
     return render(
         request,
         'subjects/enroll_subjects.html',
@@ -175,27 +166,18 @@ def enroll_subjects(request):
 @login_required
 def unenroll_subjects(request):
     if not hasattr(request.user, 'profile') or request.user.profile.role != 'S':
-        return HttpResponseForbidden(
-            'You are not allowed to unenroll from subjects.'
-        )  # Solo para alumnos
+        return HttpResponseForbidden('You are not allowed to unenroll from subjects.')
 
-    # Si es un POST, procesamos el formulario
     if request.method == 'POST':
-        form = UnenrollSubjectsForm(
-            request.POST, user=request.user
-        )  # Pasamos el usuario actual al formulario
+        form = UnenrollSubjectsForm(request.POST, user=request.user)
         if form.is_valid():
-            form.save(user=request.user)  # Guardamos las desmatriculaciones
-            messages.success(
-                request, 'Successfully unenrolled from the chosen subjects.'
-            )  # Mensaje de éxito
-            return redirect('subjects:subject-list')  # Redirigir a la lista de asignaturas
+            form.save(user=request.user)
+            messages.success(request, 'Successfully unenrolled from the chosen subjects.')
+            return redirect('subjects:subject-list')
 
     else:
-        # Si es un GET, creamos el formulario vacío
         form = UnenrollSubjectsForm(user=request.user)
 
-    # Renderizamos el formulario
     return render(
         request,
         'subjects/unenroll_subjects.html',

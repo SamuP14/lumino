@@ -14,21 +14,17 @@ def enrolled_required(function):
         if not hasattr(request.user, 'profile'):
             return HttpResponseForbidden()
 
-        # Si el usuario es un estudiante
         if request.user.profile.role == 'S':
             try:
                 subject = Subject.objects.get(code=subject_code)
-                # Verifica si el estudiante está matriculado en la asignatura
                 if subject not in request.user.students_subjects.all():
                     return HttpResponseForbidden()
             except Subject.DoesNotExist:
                 return HttpResponseForbidden()
 
-        # Si el usuario es un profesor
         elif request.user.profile.role == 'T':
             try:
                 subject = Subject.objects.get(code=subject_code)
-                # Verifica si el profesor tiene la asignatura asignada
                 if subject not in request.user.teacher_subjects.all():
                     return HttpResponseForbidden()
             except Subject.DoesNotExist:

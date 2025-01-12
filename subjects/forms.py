@@ -91,17 +91,15 @@ class EnrollSubjectsForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')  # Obtener el usuario actual desde la vista
+        user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
 
-        # Filtrar las asignaturas que el estudiante ya está matriculado
         enrolled_subjects = Enrollment.objects.filter(student=user).values_list(
             'subject', flat=True
         )
         self.fields['subjects'].queryset = Subject.objects.exclude(id__in=enrolled_subjects)
 
     def save(self, user):
-        # Guardar las inscripciones (enrollments) para el estudiante en las asignaturas seleccionadas
         subjects_to_enroll = self.cleaned_data['subjects']
         for subject in subjects_to_enroll:
             Enrollment.objects.create(student=user, subject=subject)
@@ -115,16 +113,14 @@ class UnenrollSubjectsForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')  # Obtener el usuario actual desde la vista
+        user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
 
-        # Filtrar las asignaturas de las que el estudiante está matriculado
         enrolled_subjects = Enrollment.objects.filter(student=user).values_list(
             'subject', flat=True
         )
         self.fields['subjects'].queryset = Subject.objects.filter(id__in=enrolled_subjects)
 
     def save(self, user):
-        # Eliminar las inscripciones de las asignaturas seleccionadas
         subjects_to_unenroll = self.cleaned_data['subjects']
         Enrollment.objects.filter(student=user, subject__in=subjects_to_unenroll).delete()
