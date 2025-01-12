@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from .forms import EditProfileForm
+from .models import Profile
 
 
 @login_required
@@ -48,4 +50,19 @@ def request_certificate(request):
 
 @login_required
 def leave(request):
-    pass
+    user = request.user
+
+    try:
+        profile = user.profile
+    except Profile.DoesNotExist:
+        return redirect('/')
+
+    if profile.role == Profile.Role.TEACHER:
+        return HttpResponseForbidden()
+
+    if profile.role == Profile.Role.STUDENT:
+        user.delete()
+        messages.success(request, 'Good bye! Hope to see you soon.')
+        return HttpResponseRedirect('/')
+
+    return redirect('/')

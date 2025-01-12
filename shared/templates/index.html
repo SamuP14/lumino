@@ -7,6 +7,13 @@
 {% block content %}
 {% include "navbar.html" %}
 <div class="d-flex align-items-center flex-column" style="margin-top: 200px;">
+  {% if messages %}
+    <div class="alert alert-info">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
   <h1>Welcome to Lumino</h1>
   <div class="mt-4">
     <a class="btn btn-primary" href="{% url "login" %}">Login</a>
