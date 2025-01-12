@@ -13,8 +13,8 @@
     <h4>{% translate 'My Subjects' %}</h4>
     {% if subjects %}
       {% if user.profile.is_student %}
-        <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success">Enroll</a>
-        <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger">Unenroll</a>
+        <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success mb-3 mt-3">Enroll</a>
+        <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger mb-3 mt-3">Unenroll</a>
       {% endif %}
     {% endif %}
     <div class="list-group">
@@ -28,11 +28,6 @@
             <a href="{{ subject.get_absolute_url }}" class="ms-3 btn btn-info">
               <i class="bi bi-box-arrow-up-right"></i> View
             </a>
-            {% if not user.profile.is_student %}
-              <a href="{% url "subjects:mark-list" subject.code %}" class="ms-3 btn btn-success">
-                <i class="bi bi-box-arrow-up-right"></i> Marks
-              </a>
-            {% endif %}
           </div>
         </div>
       {% empty %}

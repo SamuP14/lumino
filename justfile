@@ -200,3 +200,22 @@ redis:
             pgrep -x Redis &> /dev/null || (open /Applications/Redis.app && sleep 2)
         fi
     fi
+
+# Launch all tests
+alias pt := pytest
+pytest:
+    pytest
+
+# Launch all tests, stop on first failure
+alias pt-x := pytest-x
+pytest-x:
+    pytest -x
+
+# Launch one specific test
+alias pt-k:= pytest-k
+pytest-k test: 
+    pytest -k {{test}}
+
+# Clear the terminal
+cls:
+    clear
