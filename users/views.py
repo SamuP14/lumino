@@ -33,6 +33,7 @@ def edit_profile(request):
             return redirect(profile)
         else:
             messages.error(request, 'Error updating the profile. Please check the form.')
+
     else:
         form = EditProfileForm(instance=profile)
 
