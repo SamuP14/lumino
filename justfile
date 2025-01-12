@@ -207,14 +207,14 @@ pytest:
     pytest
 
 # Launch all tests, stop on first failure
-alias pt-x := pytest-x
+alias ptx := pytest-x
 pytest-x:
     pytest -x
 
 # Launch one specific test
-alias pt-k:= pytest-k
+alias ptk:= pytest-k
 pytest-k test: 
-    pytest -k {{test}}
+    pytest -k {{ test }}
 
 # Clear the terminal
 cls:
