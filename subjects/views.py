@@ -29,10 +29,15 @@ def subject_list(request):
 @enrolled_required
 @login_required
 def subject_detail(request, subject_code: str):
-    if request.user.profile.is_student():
-        subject = request.user.students_subjects.get(code=subject_code)
+    user = request.user
+    profile = user.profile
+
+    if profile.is_student():
+        subject = user.students_subjects.get(code=subject_code)
+        enrollment = subject.enrollments.get(student=user)
     else:
-        subject = request.user.teacher_subjects.get(code=subject_code)
+        subject = user.teacher_subjects.get(code=subject_code)
+        enrollment = False
 
     lessons = subject.lessons.all()
 
@@ -42,6 +47,7 @@ def subject_detail(request, subject_code: str):
         dict(
             subject=subject,
             lessons=lessons,
+            enrollment=enrollment,
         ),
     )
 

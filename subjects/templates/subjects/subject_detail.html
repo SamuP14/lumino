@@ -28,6 +28,9 @@
             <a href="{% url "subjects:add-lesson" subject.code %}">Add a new lesson</a>
           {% endif %}
         {% endif %}
+        {% if enrollment %}
+          <p>Your mark for this subject: {{ enrollment.mark }}</p>
+        {% endif %}
         <a href="{% url "subjects:mark-list" subject.code %}" class="ms-3 btn btn-success">
           <i class="bi bi-box-arrow-up-right"></i> Marks
         </a>
