@@ -453,9 +453,9 @@ def test_add_lesson_is_forbidden_for_non_teaching_teachers(client, teacher):
 
 
 @pytest.mark.django_db
-def test_add_lesson_is_forbidden_for_students(client, teacher):
+def test_add_lesson_is_forbidden_for_students(client, student):
     subject = baker.make_recipe('tests.subject')
-    client.force_login(teacher)
+    client.force_login(student)
     response = client.get(f'/subjects/{subject.code}/lessons/add/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
@@ -535,10 +535,10 @@ def test_edit_lesson_works_properly(client, teacher, fake):
 
 
 @pytest.mark.django_db
-def test_edit_lesson_is_forbidden_for_students(client, teacher):
+def test_edit_lesson_is_forbidden_for_students(client, student):
     subject = baker.make_recipe('tests.subject')
     lesson = baker.make_recipe('tests.lesson', subject=subject)
-    client.force_login(teacher)
+    client.force_login(student)
     response = client.get(f'/subjects/{subject.code}/lessons/{lesson.pk}/edit/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
@@ -602,7 +602,7 @@ def test_mark_list_contains_link_to_edit_marks(client, teacher):
 
 
 @pytest.mark.django_db
-def test_mark_is_forbidden_for_non_teaching_teachers(client, teacher):
+def test_mark_list_is_forbidden_for_non_teaching_teachers(client, teacher):
     subject = baker.make_recipe('tests.subject')
     client.force_login(teacher)
     response = client.get(f'/subjects/{subject.code}/marks/')
@@ -610,9 +610,9 @@ def test_mark_is_forbidden_for_non_teaching_teachers(client, teacher):
 
 
 @pytest.mark.django_db
-def test_mark_is_forbidden_for_students(client, teacher):
+def test_mark_list_is_forbidden_for_students(client, student):
     subject = baker.make_recipe('tests.subject')
-    client.force_login(teacher)
+    client.force_login(student)
     response = client.get(f'/subjects/{subject.code}/marks/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 
@@ -672,9 +672,9 @@ def test_edit_is_forbidden_for_non_teaching_teachers(client, teacher):
 
 
 @pytest.mark.django_db
-def test_edit_is_forbidden_for_students(client, teacher):
+def test_edit_is_forbidden_for_students(client, student):
     subject = baker.make_recipe('tests.subject')
-    client.force_login(teacher)
+    client.force_login(student)
     response = client.get(f'/subjects/{subject.code}/marks/edit/')
     assert response.status_code == HTTPStatus.FORBIDDEN
 

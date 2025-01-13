@@ -5,7 +5,8 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from .decorators import enrolled_required, student_required, teacher_required
+from shared.decorators import enrolled_required, student_required, teacher_required
+
 from .forms import (
     AddLessonForm,
     EditLessonForm,

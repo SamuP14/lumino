@@ -1,7 +1,7 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
 
-from .models import Subject
+from subjects.models import Subject
 
 
 def enrolled_required(function):

@@ -29,7 +29,9 @@
           {% endif %}
         {% endif %}
         {% if enrollment %}
-          <p>Your mark for this subject: {{ enrollment.mark }}</p>
+          <div class="alert alert-info" role="alert">
+            Your mark for this subject: <strong>{{ enrollment.mark }}</strong>
+          </div>
         {% endif %}
         <a href="{% url "subjects:mark-list" subject.code %}" class="ms-3 btn btn-success">
           <i class="bi bi-box-arrow-up-right"></i> Marks

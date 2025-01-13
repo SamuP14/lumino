@@ -1,11 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
+from shared.decorators import student_required
+
 from .forms import EditProfileForm
-from .models import Profile
 
 
 @login_required
@@ -44,21 +44,11 @@ def edit_profile(request):
     )
 
 
+@student_required
 @login_required
 def leave(request):
     user = request.user
-
-    try:
-        profile = user.profile
-    except Profile.DoesNotExist:
-        return redirect('/')
-
-    if profile.role == Profile.Role.TEACHER:
-        return HttpResponseForbidden()
-
-    if profile.role == Profile.Role.STUDENT:
-        user.delete()
-        messages.success(request, 'Good bye! Hope to see you soon.')
-        return HttpResponseRedirect('/')
+    user.delete()
+    messages.success(request, 'Good bye! Hope to see you soon.')
 
     return redirect('/')

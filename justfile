@@ -221,5 +221,6 @@ cls:
     clear
 
 # Open proyect docs
+alias d:= doc
 doc:
     pypas doc
