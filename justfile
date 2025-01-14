@@ -224,3 +224,7 @@ cls:
 alias d:= doc
 doc:
     pypas doc
+
+# Get subject stats on average marks
+stats:
+    ./manage.py get_subject_stats
