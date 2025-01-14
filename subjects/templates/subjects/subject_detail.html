@@ -25,17 +25,19 @@
         </p>
         {% if lessons %}
           {% if not user.profile.is_student %}
-            <a href="{% url "subjects:add-lesson" subject.code %}">Add a new lesson</a>
+            <a href="{% url "subjects:add-lesson" subject.code %}" class="btn btn-primary"><i class="bi bi-file-earmark-plus-fill"></i> Add a new lesson</a>
           {% endif %}
         {% endif %}
-        {% if enrollment %}
+        {% if enrollment.mark %}
           <div class="alert alert-info" role="alert">
             Your mark for this subject: <strong>{{ enrollment.mark }}</strong>
           </div>
         {% endif %}
+        {% if not user.profile.is_student %}
         <a href="{% url "subjects:mark-list" subject.code %}" class="ms-3 btn btn-success">
           <i class="bi bi-box-arrow-up-right"></i> Marks
         </a>
+        {% endif %}
       </div>
       {% if messages %}
         <div class="alert alert-info">
