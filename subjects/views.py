@@ -21,9 +21,24 @@ from .tasks import deliver_certificate
 
 @login_required
 def subject_list(request):
+    user = request.user
+    profile = user.profile
+    certificate_ready = False
+
+    if profile.is_student():
+        subjects = user.students_subjects.all()
+        certificate_ready = not Enrollment.objects.filter(
+            student=user, subject__in=subjects, mark__isnull=True
+        ).exists()
+    else:
+        subjects = user.teacher_subjects.all()
     return render(
         request,
         'subjects/subject_list.html',
+        dict(
+            subjects=subjects,
+            certificate_ready=certificate_ready,
+        ),
     )
 
 
@@ -150,7 +165,7 @@ def edit_marks(request, subject_code: str):
 @login_required
 def enroll_subjects(request):
     if not hasattr(request.user, 'profile') or request.user.profile.role != 'S':
-        return HttpResponseForbidden('You are not allowed to enroll in subjects.')
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = EnrollSubjectsForm(request.POST, user=request.user)
@@ -173,7 +188,7 @@ def enroll_subjects(request):
 @login_required
 def unenroll_subjects(request):
     if not hasattr(request.user, 'profile') or request.user.profile.role != 'S':
-        return HttpResponseForbidden('You are not allowed to unenroll from subjects.')
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = UnenrollSubjectsForm(request.POST, user=request.user)
@@ -195,10 +210,17 @@ def unenroll_subjects(request):
 @student_required
 @login_required
 def request_certificate(request):
-    deliver_certificate.delay(request.build_absolute_uri(), request.user)
-
-    return render(
-        request,
-        'subjects/marks/certificate_confirmation.html',
-        {'message': f'You will get the grade certificate quite soon at {request.user.email}'},
-    )
+    if request.user.enrolled.filter(mark__isnull=True).count() == 0:
+        base_url = request.build_absolute_uri('/')
+        deliver_certificate.delay(base_url, request)
+        message = f'You will get the grade certificate quite soon at {request.user.email}'
+        return render(
+            request,
+            'subjects/marks/certificate_confirmation.html',
+            dict(
+                message=message,
+            ),
+        )
+    else:
+        messages.error(request, 'You do not have permission to access this resource.')
+        return HttpResponseForbidden()

@@ -1,30 +1,39 @@
-import weasyprint
+import datetime
+import os
+
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django_rq import job
+from weasyprint import HTML
 
 
 @job
-def deliver_certificate(base_url, student):
-    pdf_filename = f'{student.username}_grade_certificate.pdf'
+def deliver_certificate(base_url, request):
+    context = {
+        'student': request.user,
+        'today': datetime.date.today(),
+        'request': request,
+    }
 
-    html_content = render_to_string(
-        'subjects/marks/certificate_template.html',
-        {
-            'student': student,
-        },
+    certificate_html = render_to_string('subjects/marks/certificate_template.html', context)
+
+    output_directory = settings.CERTIFICATE_DIR
+    output_filename = f'{request.user.username}_grade_certificate.pdf'
+    output_path = os.path.join(output_directory, output_filename)
+
+    os.makedirs(output_directory, exist_ok=True)
+
+    HTML(string=certificate_html, base_url=base_url).write_pdf(output_path)
+
+    email_body = render_to_string('subjects/marks/email.html', {'student': request.user})
+
+    email = EmailMessage(
+        subject='Marks Certificate',
+        body=email_body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[request.user.email],
     )
-
-    pdf = weasyprint.HTML(string=html_content).write_pdf()
-
-    file_path = settings.CERTIFICATE_DIR / pdf_filename
-    with open(file_path, 'wb') as f:
-        f.write(pdf)
-
-    subject = 'Your Grade Certificate'
-    message = 'Please find attached your grade certificate.'
-    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL, [student.email])
-    email.attach(pdf_filename, pdf, 'application/pdf')
-
+    email.content_subtype = 'html'
+    email.attach_file(output_path)
     email.send()

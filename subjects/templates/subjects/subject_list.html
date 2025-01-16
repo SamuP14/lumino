@@ -15,6 +15,9 @@
       {% if user.profile.is_student %}
         <a href="{% url "subjects:enroll-subjects" %}" class="btn btn-success mb-3 mt-3">Enroll</a>
         <a href="{% url "subjects:unenroll-subjects" %}" class="btn btn-danger mb-3 mt-3">Unenroll</a>
+        {% if certificate_ready %}
+          <a href="{% url "subjects:request-certificate"%}" class="btn btn-info mb-3 mt-3">Request Mark Certificate</a>
+        {% endif %}
       {% endif %}
     {% endif %}
     <div class="list-group">
